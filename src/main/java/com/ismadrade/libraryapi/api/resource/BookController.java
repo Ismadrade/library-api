@@ -2,6 +2,7 @@ package com.ismadrade.libraryapi.api.resource;
 
 import com.ismadrade.libraryapi.api.dto.BookDTO;
 import com.ismadrade.libraryapi.api.exception.ApiErrors;
+import com.ismadrade.libraryapi.api.exception.BusinessException;
 import com.ismadrade.libraryapi.api.model.entity.Book;
 import com.ismadrade.libraryapi.service.BookService;
 import org.modelmapper.ModelMapper;
@@ -39,4 +40,11 @@ public class BookController {
         BindingResult bindingResult = ex.getBindingResult();
         return new ApiErrors(bindingResult);
     }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrors handleBusinessExceptions(BusinessException ex){
+        return new ApiErrors(ex);
+    }
+
 }
